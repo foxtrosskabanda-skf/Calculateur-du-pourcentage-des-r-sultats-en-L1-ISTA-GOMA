@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Calcul du Pourcentage - Foxtross Kabanda</title>
+</head>
+<body>
+
+<h1 style="text-align:center;">📘 Calculateur de Pourcentage</h1>
+<h3 style="text-align:center;">Développé par <strong>Foxtross Kabanda</strong></h3>
+<hr><br>
+
+<div id="interface">
+  <p id="question"></p>
+  <input type="number" id="note" step="0.01">
+  <button onclick="suivant()">OK</button>
+</div>
+
+<h3 id="resultat"></h3>
+
+<script>
+let cours = [
+  "EOE", "Logique et Argumentation", "IRS", "Chimie 1", "Physique 1",
+  "Algèbre et Analyse", "Info 1", "Projet 1", "Math 2", "Info 2",
+  "Anglais", "Projet 2", "Chimie 2", "Physique 2"
+];
+
+let notes = [];
+let index = 0;
+
+function afficherQuestion() {
+  document.getElementById("question").innerText = 
+    "Entrez la note pour " + cours[index] + " (sur 20) :";
+  document.getElementById("note").value = "";
+  document.getElementById("note").focus();
+}
+
+function suivant() {
+  let val = parseFloat(document.getElementById("note").value);
+  if (isNaN(val) || val < 0 || val > 20) {
+    alert("⚠️ Entrer une note valide entre 0 et 20");
+    return;
+  }
+  notes.push(val);
+  index++;
+  
+  if (index < cours.length) {
+    afficherQuestion();
+  } else {
+    calculer();
+  }
+}
+
+function calculer() {
+  let total = notes.reduce((a,b) => a + b, 0);
+  let pourcentage = (total / (14 * 20)) * 100;
+  
+  document.getElementById("interface").style.display = "none";
+  document.getElementById("resultat").innerHTML =
+    "📊 Total des points : <b>" + total + "</b> / 280<br>" +
+    "🎯 Pourcentage : <b>" + pourcentage.toFixed(2) + "%</b>";
+}
+
+// Lancer la première question au chargement
+afficherQuestion();
+</script>
+
+</body>
+</html>
